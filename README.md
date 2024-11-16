@@ -14,7 +14,6 @@ VaultEvo的用户是LP，他们希望从DeFi协议中赚取收入，而不必总
     - Supply Queue: 每次Deposit时，按指定顺序向市场供应资金(Atomically)。在达到队列中的所有市场上限后，剩余资金作为闲置流动性(idle liquidity)留在Vault中。
     - Withdraw queue: ...
 
-
 ## Roles
 
 ### Owner
