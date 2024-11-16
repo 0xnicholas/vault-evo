@@ -1,66 +1,25 @@
-## Foundry
+# Vault-Evo
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+VaultEvo是一种可用于任何DeFi协议的(noncustodial)Vault主动管理协议，它使任何人都可以创建一个Vault，并用于多个DeFi市场。其产品形态类似于TradFi中的资产管理。
 
-Foundry consists of:
+VaultEvo的用户是LP，他们希望从DeFi协议中赚取收入，而不必总是管理其头寸的风险。存款的主动管理通过一组不同角色 (owner, mananger and guardian) 来进行，这些角色主要负责管理用户资金的分配和控制DeFi市场的策略。
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+VaultEvo是ERC-4626 vault, with ERC-2612 permit.
 
-## Documentation
+## Roles
 
-https://book.getfoundry.sh/
+### Owner
+supreme auth
+- Do what the Manager/Guardian can do.
+- Set Manager/Guardian, set performance fee&fee recipient.
+- Set the rewards recipient.
+- Increase/Decrease the timelock.
 
-## Usage
+### Manager(s)
+- Set the order of supply&withdraw from markets.(market queue)
+- Increase/Decrease the supply cap of any market.
+- Revoke the pending cap of any market, force removal of a market.
+- Timelock
 
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+### Guiardian
+- Revoke everything.
