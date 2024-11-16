@@ -1,3 +1,0 @@
-@solmate/=lib/solmate/
-@licolib/=lib/licolib/
-@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
