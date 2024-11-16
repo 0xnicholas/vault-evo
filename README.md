@@ -25,7 +25,7 @@ supreme auth
 - Revoke everything.
 
 
-## References
+## Vault References
 
 ### `Market`
 - `MarketParams` struct,
