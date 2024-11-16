@@ -15,7 +15,6 @@ VaultEvo的用户是LP，他们希望从DeFi协议中赚取收入，而不必总
     - Withdraw queue: ...
 
 
-
 ## Roles
 
 ### Owner
