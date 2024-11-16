@@ -23,3 +23,67 @@ supreme auth
 
 ### Guiardian
 - Revoke everything.
+
+
+## References
+
+### `Market`
+- `MarketParams` struct,
+- `market` struct,
+- `Id` of markets.
+
+### Owner Functions
+
+#### setManager
+`function setManager(address newManager) external onlyOwner {}`
+
+#### setSkimRecipient
+`function setSkimRecipient(address newSkimRecipient) external onlyOwner {}`
+
+#### submitTimelock
+`function submitTimelock(uint256 newTimelock) external onlyOwner {}`
+
+#### setFee
+`function setFee(uint256 newFee) external onlyOwner {}`
+
+#### setFeeRecipient
+`function setFeeRecipient(address newFeeRecipient) external onlyOwner {}`
+
+#### submitGuardian
+`function submitGuardian(address newGuardian) external onlyOwner {}`
+
+### Manager(s) Functions
+
+#### submitCap
+
+`function submitCap(MarketParams memory marketParams, uint256 newSupplyCap) external onlyManager {}`
+
+#### submitMarketRemoval
+`function submitMarketRemoval(Id id) external onlyManager {}`
+
+#### setSupplyQueue
+`function setSupplyQueue(Id[] calldata newSupplyQueue) external onlyManager {}`
+
+#### updateWithdrawQueue
+`function updateWithdrawQueue(uint256[] calldata indexes) external onlyManager {}`
+
+#### reallocate
+`function reallocate(MarketAllocation[] calldata allocations) external onlyManager {}`
+
+### Guardian Functions
+
+#### revokePendingTimelock
+`function revokePendingTimelock() external onlyGuardian {}`
+
+#### revokePendingGuardian
+`function revokePendingGuardian() external onlyGuardian {}`
+
+#### revokePendingCap
+`function revokePendingCap(Id id) external onlyGuardian {}`
+
+#### revokePendingMarketRemoval
+`function revokePendingMarketRemoval(Id id) external onlyGuardian {}`
+
+### Liquidity
+
+
