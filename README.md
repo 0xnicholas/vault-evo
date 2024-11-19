@@ -92,6 +92,10 @@ supreme auth
 #### revokePendingMarketRemoval
 `function revokePendingMarketRemoval(Id id) external onlyGuardian {}`
 
-### Liquidity
+---
 
-
+## _Memo
+| Follow up | Solutions |
+|----|----|
+|- Vault与Canal协议的耦合度太高 | 封装接口，以标准接口对外集成DeFi协议,canal只是其中一例|
+|- 新增了角色Curator | 考虑与Allocator合为Managers |
