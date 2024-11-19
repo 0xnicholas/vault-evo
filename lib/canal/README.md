@@ -1,0 +1,1 @@
+Canal Finance 构建了一个流动性聚合层，可用于swap, perps, lending等DeFi应用场景。- Lico labs
