@@ -3,7 +3,7 @@ pragma solidity ^0.8.28;
 
 import {MarketParams, Market} from "./ICanal.sol";
 
-/// @notice Interface that Interest Rate Models (IRMs) used by Morpho must implement.
+/// @notice Interface that Interest Rate Models (IRMs) used by Canal must implement.
 interface IIrm {
     /// @notice Returns the borrow rate per second (scaled by WAD) of the market `marketParams`.
     /// @dev Assumes that `market` corresponds to `marketParams`.

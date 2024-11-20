@@ -1,5 +1,27 @@
 [profile.default]
 src = "src"
+test = "test/forge"
 out = "out"
+script = "script"
 libs = ["lib"]
-solc_version="0.8.28"
+evm_version="cancun"
+solc="0.8.28"
+fs_permissions = [
+    { access = "read", path = "./out/"}
+]
+
+[profile.default.rpc_endpoints]
+
+
+[profile.default.fmt]
+wrap_comments = true
+
+
+[profile.build]
+via-ir = true
+test = "/dev/null"
+script = "/dev/null"
+
+
+[profile.test]
+via-ir = false

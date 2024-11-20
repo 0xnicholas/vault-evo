@@ -101,16 +101,16 @@ interface ICanalBase {
 
     /// @notice Creates the market `marketParams`.
     /// @dev Here is the list of assumptions on the market's dependencies (tokens, IRM and oracle) that guarantees
-    /// Morpho behaves as expected:
+    /// Canal behaves as expected:
     /// - The token should be ERC-20 compliant, except that it can omit return values on `transfer` and `transferFrom`.
-    /// - The token balance of Morpho should only decrease on `transfer` and `transferFrom`. In particular, tokens with
+    /// - The token balance of Canal should only decrease on `transfer` and `transferFrom`. In particular, tokens with
     /// burn functions are not supported.
-    /// - The token should not re-enter Morpho on `transfer` nor `transferFrom`.
+    /// - The token should not re-enter Canal on `transfer` nor `transferFrom`.
     /// - The token balance of the sender (resp. receiver) should decrease (resp. increase) by exactly the given amount
     /// on `transfer` and `transferFrom`. In particular, tokens with fees on transfer are not supported.
-    /// - The IRM should not re-enter Morpho.
+    /// - The IRM should not re-enter Canal.
     /// - The oracle should return a price with the correct scaling.
-    /// @dev Here is a list of properties on the market's dependencies that could break Morpho's liveness properties
+    /// @dev Here is a list of properties on the market's dependencies that could break Canal's liveness properties
     /// (funds could get stuck):
     /// - The token can revert on `transfer` and `transferFrom` for a reason other than an approval or balance issue.
     /// - A very high amount of assets (~1e35) supplied or borrowed can make the computation of `toSharesUp` and
@@ -127,7 +127,7 @@ interface ICanalBase {
     function createMarket(MarketParams memory marketParams) external;
 
     /// @notice Supplies `assets` or `shares` on behalf of `onBehalf`, optionally calling back the caller's
-    /// `onMorphoSupply` function with the given `data`.
+    /// `onCanalSupply` function with the given `data`.
     /// @dev Either `assets` or `shares` should be zero. Most use cases should rely on `assets` as an input so the
     /// caller is guaranteed to have `assets` tokens pulled from their balance, but the possibility to mint a specific
     /// amount of shares is given for full compatibility and precision.
@@ -138,7 +138,7 @@ interface ICanalBase {
     /// @param assets The amount of assets to supply.
     /// @param shares The amount of shares to mint.
     /// @param onBehalf The address that will own the increased supply position.
-    /// @param data Arbitrary data to pass to the `onMorphoSupply` callback. Pass empty data if not needed.
+    /// @param data Arbitrary data to pass to the `onCanalSupply` callback. Pass empty data if not needed.
     /// @return assetsSupplied The amount of assets supplied.
     /// @return sharesSupplied The amount of shares minted.
     function supply(
@@ -194,7 +194,7 @@ interface ICanalBase {
     ) external returns (uint256 assetsBorrowed, uint256 sharesBorrowed);
 
     /// @notice Repays `assets` or `shares` on behalf of `onBehalf`, optionally calling back the caller's
-    /// `onMorphoRepay` function with the given `data`.
+    /// `onCanalRepay` function with the given `data`.
     /// @dev Either `assets` or `shares` should be zero. To repay max, pass the `shares`'s balance of `onBehalf`.
     /// @dev Repaying an amount corresponding to more shares than borrowed will revert for underflow.
     /// @dev It is advised to use the `shares` input when repaying the full position to avoid reverts due to conversion
@@ -204,7 +204,7 @@ interface ICanalBase {
     /// @param assets The amount of assets to repay.
     /// @param shares The amount of shares to burn.
     /// @param onBehalf The address of the owner of the debt position.
-    /// @param data Arbitrary data to pass to the `onMorphoRepay` callback. Pass empty data if not needed.
+    /// @param data Arbitrary data to pass to the `onCanalRepay` callback. Pass empty data if not needed.
     /// @return assetsRepaid The amount of assets repaid.
     /// @return sharesRepaid The amount of shares burned.
     function repay(
@@ -216,13 +216,13 @@ interface ICanalBase {
     ) external returns (uint256 assetsRepaid, uint256 sharesRepaid);
 
     /// @notice Supplies `assets` of collateral on behalf of `onBehalf`, optionally calling back the caller's
-    /// `onMorphoSupplyCollateral` function with the given `data`.
+    /// `onCanalSupplyCollateral` function with the given `data`.
     /// @dev Interest are not accrued since it's not required and it saves gas.
     /// @dev Supplying a large amount can revert for overflow.
     /// @param marketParams The market to supply collateral to.
     /// @param assets The amount of collateral to supply.
     /// @param onBehalf The address that will own the increased collateral position.
-    /// @param data Arbitrary data to pass to the `onMorphoSupplyCollateral` callback. Pass empty data if not needed.
+    /// @param data Arbitrary data to pass to the `onCanalSupplyCollateral` callback. Pass empty data if not needed.
     function supplyCollateral(MarketParams memory marketParams, uint256 assets, address onBehalf, bytes memory data)
         external;
 
@@ -238,7 +238,7 @@ interface ICanalBase {
 
     /// @notice Liquidates the given `repaidShares` of debt asset or seize the given `seizedAssets` of collateral on the
     /// given market `marketParams` of the given `borrower`'s position, optionally calling back the caller's
-    /// `onMorphoLiquidate` function with the given `data`.
+    /// `onCanalLiquidate` function with the given `data`.
     /// @dev Either `seizedAssets` or `repaidShares` should be zero.
     /// @dev Seizing more than the collateral balance will underflow and revert without any error message.
     /// @dev Repaying more than the borrow balance will underflow and revert without any error message.
@@ -247,7 +247,7 @@ interface ICanalBase {
     /// @param borrower The owner of the position.
     /// @param seizedAssets The amount of collateral to seize.
     /// @param repaidShares The amount of shares to repay.
-    /// @param data Arbitrary data to pass to the `onMorphoLiquidate` callback. Pass empty data if not needed.
+    /// @param data Arbitrary data to pass to the `onCanalLiquidate` callback. Pass empty data if not needed.
     /// @return The amount of assets seized.
     /// @return The amount of assets repaid.
     function liquidate(
@@ -267,7 +267,7 @@ interface ICanalBase {
     /// - The receiver of `assets` is the caller.
     /// @param token The token to flash loan.
     /// @param assets The amount of assets to flash loan.
-    /// @param data Arbitrary data to pass to the `onMorphoFlashLoan` callback.
+    /// @param data Arbitrary data to pass to the `onCanalFlashLoan` callback.
     function flashLoan(address token, uint256 assets, bytes calldata data) external;
 
     /// @notice Sets the authorization for `authorized` to manage `msg.sender`'s positions.
@@ -318,7 +318,7 @@ interface ICanalStaticTyping is ICanalBase {
         );
 
     /// @notice The market params corresponding to `id`.
-    /// @dev This mapping is not used in Morpho. It is there to enable reducing the cost associated to calldata on layer
+    /// @dev This mapping is not used in Canal. It is there to enable reducing the cost associated to calldata on layer
     /// 2s by creating a wrapper contract with functions that take `id` as input instead of `marketParams`.
     function idToMarketParams(Id id)
         external
@@ -341,7 +341,7 @@ interface ICanal is ICanalBase {
     function market(Id id) external view returns (Market memory m);
 
     /// @notice The market params corresponding to `id`.
-    /// @dev This mapping is not used in Morpho. It is there to enable reducing the cost associated to calldata on layer
+    /// @dev This mapping is not used in Canal. It is there to enable reducing the cost associated to calldata on layer
     /// 2s by creating a wrapper contract with functions that take `id` as input instead of `marketParams`.
     function idToMarketParams(Id id) external view returns (MarketParams memory);
 }

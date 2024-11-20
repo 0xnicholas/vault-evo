@@ -62,7 +62,7 @@ library ErrorsLib {
     /// @notice Thrown when there's no pending value to set.
     error NoPendingValue();
 
-    /// @notice Thrown when the requested liquidity cannot be withdrawn from Morpho.
+    /// @notice Thrown when the requested liquidity cannot be withdrawn from Canal.
     error NotEnoughLiquidity();
 
     /// @notice Thrown when submitting a cap for a market which does not exist.

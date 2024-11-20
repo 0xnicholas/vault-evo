@@ -38,6 +38,8 @@ import {
 } from "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
 
 /**
+@author @nicholaslico
+
 Sections
     1. IMMUTABLES
     2. STORAGE
@@ -589,7 +591,7 @@ contract VaultEvo is ERC4626, ERC20Permit, Ownable2Step, Multicall, IVaultEvoSta
         newTotalSupply = totalSupply() + feeShares;
 
         assets = _convertToAssetsWithTotals(balanceOf(owner), newTotalSupply, newTotalAssets, Math.Rounding.Floor);
-        assets -= _simulateWithdrawMorpho(assets);
+        assets -= _simulateWithdrawCanal(assets);
     }
 
     /// @dev Returns the maximum amount of assets that the vault can supply on Canal.
@@ -807,7 +809,7 @@ contract VaultEvo is ERC4626, ERC20Permit, Ownable2Step, Multicall, IVaultEvoSta
 
     /// @dev Simulates a withdraw of `assets` from Canal.
     /// @return The remaining assets to be withdrawn.
-    function _simulateWithdrawMorpho(uint256 assets) internal view returns (uint256) {
+    function _simulateWithdrawCanal(uint256 assets) internal view returns (uint256) {
         for (uint256 i; i < withdrawQueue.length; ++i) {
             Id id = withdrawQueue[i];
             MarketParams memory marketParams = _marketParams(id);
